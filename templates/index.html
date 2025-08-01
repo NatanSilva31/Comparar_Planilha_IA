@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Planilhas com IA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Comparador de Planilhas com IA</h1>
+                <p>Faça o upload de duas planilhas e diga à IA o que comparar.</p>
+            </div>
+
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file1">Planilha 1 (.xlsx)</label>
+                    <input type="file" id="file1" name="file1" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="file2">Planilha 2 (.xlsx)</label>
+                    <input type="file" id="file2" name="file2" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="comando">O que você deseja comparar?</label>
+                    <input type="text" id="comando" name="comando" class="form-control" placeholder="Ex: Itens na planilha 1 que não estão na 2" required>
+                </div>
+
+                <button type="submit" class="btn">Comparar Agora</button>
+            </form>
+        </div>
+
+        {% if erro %}
+            <div class="alert alert-danger mt-4">{{ erro }}</div>
+        {% endif %}
+
+        {% if resultado %}
+            <div class="card result-card mt-4">
+                <h2>🔍 Resultado da Análise</h2>
+                <div class="table-responsive">
+                    {{ resultado|safe }}
+                </div>
+            </div>
+        {% endif %}
+    </main>
+
+</body>
+</html>
