@@ -1,111 +1,150 @@
 /* ---
-  TEMA: Aurora Glass (Dark Mode)
-  DESCRIÇÃO: Um design moderno com fundo de gradiente animado e elementos
-             com efeito de vidro (Glassmorphism).
+  TEMA: Minimalist Dark (com sua paleta de cores)
+  DESCRIÇÃO: Um design moderno e minimalista com fundo de gradiente animado
+             e elementos com efeito de vidro (Glassmorphism).
 --- */
 
-/* --- Importação da Fonte e Variáveis --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* --- Importação da Fonte e Variáveis de Cor --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
 :root {
-    --font-family: 'Inter', sans-serif;
+    --font-family: 'Poppins', sans-serif;
     
-    /* Paleta de cores para o fundo animado */
-    --aurora-color-1: #7928ca;
-    --aurora-color-2: #0070f3;
-    --aurora-color-3: #50e3c2;
+    /* Sua paleta de cores aplicada ao tema */
+    --preto-fundo: #0d1117;     /* Um preto levemente azulado, usado no fundo */
+    --azul-destaque: #3b82f6;   /* Azul vibrante para ações principais (botões) */
+    --rosa-vibrante: #ec4899;   /* Rosa para detalhes e destaques secundários */
+    --vermelho-alerta: #ef4444; /* Vermelho para alertas e mensagens de erro */
 
-    /* Cores do tema de vidro */
-    --glass-bg: rgba(10, 10, 20, 0.4);
+    /* Cores do tema de vidro e texto */
+    --glass-bg: rgba(22, 27, 34, 0.6); /* Fundo do card, mais escuro e com mais opacidade */
     --glass-border: rgba(255, 255, 255, 0.1);
-    --text-primary: #f0f0f0;
-    --text-secondary: #a0a0b0;
-    --accent-glow: #0070f3;
-
+    --text-primary: #e6edf3;
+    --text-secondary: #909dab;
+    
     /* Configurações de UI */
-    --border-radius: 16px;
-    --backdrop-blur: 15px; /* Efeito de vidro fosco */
+    --border-radius: 12px;
+    --backdrop-blur: 15px;
 }
 
-/* --- Animação do Fundo --- */
-@keyframes move-aurora {
+
+/* --- Animações --- */
+@keyframes move-gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
 @keyframes fade-in {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 
 /* --- Estilo Base e Fundo Animado --- */
 body {
     font-family: var(--font-family);
-    background-color: #05050a; /* Fundo sólido de fallback */
-    background-image: linear-gradient(125deg, var(--aurora-color-1), var(--aurora-color-2), var(--aurora-color-3));
+    background-color: var(--preto-fundo);
+    background-image: linear-gradient(125deg, var(--azul-destaque), var(--rosa-vibrante), var(--vermelho-alerta));
     background-size: 400% 400%;
     color: var(--text-primary);
-    
     margin: 0;
-    padding: 2rem;
-    
+    padding: 0; /* Removido padding do body para a navbar ocupar toda a largura */
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Organiza navbar e main verticalmente */
     align-items: center;
     min-height: 100vh;
-    
-    animation: move-aurora 20s ease infinite;
-    overflow: hidden; /* Evita barras de rolagem do fundo */
+    animation: move-gradient 25s ease infinite;
+    overflow-y: auto;
 }
+
 
 /* --- Estrutura e Animação de Entrada --- */
 .container {
     width: 100%;
-    max-width: 700px;
-    animation: fade-in 0.8s ease-out forwards;
+    max-width: 800px;
+    animation: fade-in 0.7s ease-out forwards;
+    padding-bottom: 3rem; /* Espaço no final da página */
 }
 
-.mt-4 {
-    margin-top: 2rem;
+
+/* --- Navbar Customizada (Menu Superior) --- */
+.navbar-custom {
+    width: 100%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--backdrop-blur));
+    -webkit-backdrop-filter: blur(var(--backdrop-blur));
+    border-bottom: 1px solid var(--glass-border);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 3rem; /* Espaço entre o menu e o card */
 }
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .navbar-brand:hover {
+    color: white;
+}
+
+.navbar-custom .nav-link {
+    font-weight: 500;
+}
+
+.navbar-custom .navbar-toggler {
+    border-color: var(--glass-border);
+}
+
+.navbar-custom .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 
 /* --- Efeito de Vidro (Glassmorphism) para o Card --- */
 .card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
-    padding: 2.5rem 3rem;
-    
-    /* Efeito de vidro fosco */
+    padding: 2.5rem;
     backdrop-filter: blur(var(--backdrop-blur));
     -webkit-backdrop-filter: blur(var(--backdrop-blur));
-
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    border-radius: 16px; /* Aumentado para um look mais suave */
 }
 
-/* --- Tipografia Moderna --- */
+
+/* --- Tipografia e Cabeçalho do Card --- */
 .card-header {
     text-align: center;
     margin-bottom: 2.5rem;
+    padding: 0;
+    border-bottom: none;
+    background: none;
 }
 
 .card-header h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
+    font-size: 2.2rem;
+    font-weight: 600;
     margin: 0;
-    letter-spacing: -1px;
-    background: linear-gradient(90deg, #fff, #c4c4ff);
+    /* EFEITO DE TEXTO EM GRADIENTE */
+    background: linear-gradient(90deg, var(--azul-destaque), var(--rosa-vibrante), var(--vermelho-alerta));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    padding-bottom: 5px; /* Pequeno espaço para o gradiente respirar */
 }
 
 .card-header p {
     font-size: 1rem;
-    font-weight: 400;
     color: var(--text-secondary);
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
 }
+
 
 /* --- Formulário com Estilo Moderno --- */
 .form-group {
@@ -113,80 +152,135 @@ body {
 }
 
 .form-group label {
-    display: block;
     font-weight: 500;
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
     font-size: 0.9rem;
+    display: block; /* Garante que a label ocupe a linha */
 }
 
 .form-control {
     width: 100%;
-    padding: 0.9rem 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    padding: 0.8rem 1rem;
+    background: rgba(0, 0, 0, 0.25);
     border: 1px solid var(--glass-border);
-    border-radius: 10px;
-    
+    border-radius: 8px;
     font-family: var(--font-family);
     font-size: 1rem;
     color: var(--text-primary);
-    
     transition: all 0.3s ease;
 }
 
 .form-control::placeholder {
     color: var(--text-secondary);
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
-.form-control:focus {
+.form-control:focus, .custom-file-input:focus ~ .custom-file-label {
     outline: none;
-    border-color: rgba(0, 112, 243, 0.5);
-    box-shadow: 0 0 0 4px rgba(0, 112, 243, 0.3); /* Efeito de brilho (glow) */
+    border-color: var(--azul-destaque); /* Foco em azul */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
 }
 
-/* --- Estilo do Input de Arquivo --- */
-.form-control[type="file"]::file-selector-button {
-    background: var(--accent-glow);
-    color: white;
-    padding: 0.8rem 1rem;
+
+/* --- Dropdown (Select) Estilizado --- */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23e6edf3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 2.5rem;
+}
+
+
+/* --- Input de Arquivo Estilizado --- */
+.custom-file {
+    background-color: transparent;
     border: none;
-    border-radius: 8px;
-    font-family: var(--font-family);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-right: 1rem;
 }
 
-.form-control[type="file"]::file-selector-button:hover {
-    filter: brightness(1.2);
+.custom-file-input {
+    color: transparent;
 }
+
+.custom-file-label {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    padding: 0.8rem 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.custom-file-label::after {
+    content: "Procurar";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.8rem 1.2rem;
+    background-color: var(--rosa-vibrante); /* APLICANDO O ROSA */
+    border-left: 1px solid var(--glass-border);
+    color: white;
+    font-weight: 500;
+    transition: filter 0.2s ease;
+}
+
+.custom-file-label:hover::after {
+    filter: brightness(1.15);
+}
+
 
 /* --- Botão Principal --- */
-.btn {
+.btn.btn-primary {
     width: 100%;
-    padding: 1rem;
+    padding: 0.9rem;
     border: none;
-    border-radius: 10px;
-    background-color: var(--accent-glow);
+    border-radius: 8px;
+    background-color: var(--azul-destaque); /* APLICANDO O AZUL */
     color: white;
     font-family: var(--font-family);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.btn:hover {
+.btn.btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 112, 243, 0.4);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); /* Sombra azul */
+    filter: brightness(1.1);
 }
+
 
 /* --- Alertas e Resultados --- */
 .alert-danger {
-    background: rgba(220, 53, 69, 0.3);
-    border: 1px solid rgba(220, 53, 69, 0.5);
+    background: rgba(239, 68, 68, 0.15);  /* Fundo avermelhado */
+    border: 1px solid var(--vermelho-alerta);
+    border-left: 4px solid var(--vermelho-alerta); /* Destaque na lateral */
     color: #f8d7da;
     border-radius: var(--border-radius);
     padding: 1rem 1.5rem;
@@ -197,23 +291,21 @@ body {
     padding: 2rem;
 }
 
-.result-card h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
+.table-responsive {
+    overflow-x: auto;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .table th, .table td {
-    padding: 0.8rem 1rem;
+    padding: 0.75rem 1rem;
     text-align: left;
     border-bottom: 1px solid var(--glass-border);
+    white-space: nowrap;
 }
 
 .table th {
@@ -221,10 +313,6 @@ body {
     font-weight: 600;
 }
 
-.table tbody tr {
-    transition: background-color 0.2s ease;
-}
-
 .table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.04);
 }

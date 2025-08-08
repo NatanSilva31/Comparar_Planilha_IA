@@ -3,54 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparador de Planilhas com IA</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Comparador de Planilhas</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Comparador de Planilhas
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Início <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sobre</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
     <main class="container">
         <div class="card">
             <div class="card-header">
-                <h1>Comparador de Planilhas com IA</h1>
-                <p>Faça o upload de duas planilhas e diga à IA o que comparar.</p>
+                <h1>Comparador de Planilhas</h1>
+                <p>Faça o upload de duas planilhas e escolha como deseja compará-las.</p>
             </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="file1">Planilha 1 (.xlsx)</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file1" name="file1" required>
+                                    <label class="custom-file-label" for="file1">Escolher arquivo...</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="file2">Planilha 2 (.xlsx)</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file2" name="file2" required>
+                                    <label class="custom-file-label" for="file2">Escolher arquivo...</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <form method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="file1">Planilha 1 (.xlsx)</label>
-                    <input type="file" id="file1" name="file1" class="form-control" required>
-                </div>
+                    <div class="form-group">
+                        <label for="comando">Selecione a operação de comparação:</label>
+                        <div class="select-wrapper">
+                            <select class="form-control" id="comando" name="comando">
+                                <option value="intersecao">Mostrar o que está em AMBAS as planilhas (Interseção)</option>
+                                <option value="diferenca_a">Mostrar o que está SOMENTE na Planilha 1</option>
+                                <option value="diferenca_b">Mostrar o que está SOMENTE na Planilha 2</option>
+                            </select>
+                        </div>
+                    </div>
 
-                <div class="form-group">
-                    <label for="file2">Planilha 2 (.xlsx)</label>
-                    <input type="file" id="file2" name="file2" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="comando">O que você deseja comparar?</label>
-                    <input type="text" id="comando" name="comando" class="form-control" placeholder="Ex: Itens na planilha 1 que não estão na 2" required>
-                </div>
-
-                <button type="submit" class="btn">Comparar Agora</button>
-            </form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="coluna1">Coluna da Planilha 1 (chave):</label>
+                                <input type="text" class="form-control" id="coluna1" name="coluna1" placeholder="Nome, Letra ou Nº da Coluna" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="coluna2">Coluna da Planilha 2 (chave):</label>
+                                <input type="text" class="form-control" id="coluna2" name="coluna2" placeholder="Nome, Letra ou Nº da Coluna" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Comparar Agora</button>
+                </form>
+            </div>
         </div>
 
         {% if erro %}
-            <div class="alert alert-danger mt-4">{{ erro }}</div>
+            <div class="alert alert-danger mt-4" role="alert">{{ erro }}</div>
         {% endif %}
-
+        
         {% if resultado %}
-            <div class="card result-card mt-4">
-                <h2>🔍 Resultado da Análise</h2>
-                <div class="table-responsive">
-                    {{ resultado|safe }}
-                </div>
-            </div>
+            <div class="card result-card mt-4">{{ resultado|safe }}</div>
         {% endif %}
     </main>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.querySelectorAll('.custom-file-input').forEach(function (input) {
+            input.addEventListener('change', function (e) {
+                var fileName = e.target.files[0] ? e.target.files[0].name : 'Escolher arquivo...';
+                var nextSibling = e.target.nextElementSibling;
+                nextSibling.innerText = fileName;
+            });
+        });
+    </script>
 </body>
 </html>
